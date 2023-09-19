@@ -17,6 +17,27 @@ public class Message implements Serializable {
         this.content = content;
     }
 
+    public String toChatFormat() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = this.date.format(dateFormatter);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = this.date.format(timeFormatter);
+        return "(" + formattedDate + ")" +
+                " [" + formattedTime + "] " +
+                this.author + ": " +
+                this.content;
+    }
+
+    @Override
+    public String toString() {
+        return "schoolChat.models.Message{" +
+                "author='" + author + '\'' +
+                ", date=" + date +
+                ", topic='" + topic + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -47,26 +68,5 @@ public class Message implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "schoolChat.models.Message{" +
-                "author='" + author + '\'' +
-                ", date=" + date +
-                ", topic='" + topic + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
-
-    public String toChatFormat() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String formattedDate = this.date.format(dateFormatter);
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        String formattedTime = this.date.format(timeFormatter);
-        return "(" + formattedDate + ")" +
-                " [" + formattedTime + "] " +
-                this.author + ": " +
-                this.content;
     }
 }

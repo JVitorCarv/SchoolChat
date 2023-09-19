@@ -1,4 +1,4 @@
-package schoolChat.clients;
+package schoolChat.clients.chat;
 
 import schoolChat.models.Message;
 import schoolChat.views.Menu;

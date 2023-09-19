@@ -6,7 +6,6 @@ import java.net.MulticastSocket;
 import java.util.Scanner;
 
 public class UserInput implements Runnable {
-
     private final MulticastSocket socket;
 
     public UserInput(MulticastSocket socket) {

@@ -1,12 +1,13 @@
 package schoolChat.clients;
 
 import schoolChat.clients.announcement.AnnouncementClient;
+import schoolChat.clients.chat.ChatClient;
 import schoolChat.views.Menu;
 
 import java.io.IOException;
 
 public class Client {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException {
         Menu.printWelcome();
         String author = Menu.getIdentification();
 
