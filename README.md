@@ -26,4 +26,5 @@ As mensagens trocadas em nossa plataforma seguem um formato claro e organizado:
 ``
 (dd/MM/yyyy) [HH:mm] Nome: mensagem. 
 ``
+
 Assim, tornando-se fácil a identificação das informações e de quem as está enviando.
