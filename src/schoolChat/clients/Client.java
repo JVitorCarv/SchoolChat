@@ -1,7 +1,7 @@
 package schoolChat.clients;
 
+import schoolChat.clients.announcement.AnnouncementClient;
 import schoolChat.views.Menu;
-import schoolChat.models.Message;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ public class Client {
 
         int mode = Menu.getMode();
         if (mode < 0) {
-            System.out.println("Closing client...");
+            Menu.disconnectWarning();
         }
         else if (mode == 1) {
             System.out.println("We're still implementing announcements...");

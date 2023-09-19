@@ -1,8 +1,8 @@
 package schoolChat.servers;
 
-import schoolChat.views.Menu;
 import schoolChat.models.Message;
 import schoolChat.models.Serialization;
+import schoolChat.views.Menu;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -11,9 +11,9 @@ import java.net.MulticastSocket;
 
 
 public class AnnouncementServer {
-    private MulticastSocket socket;
-    private String author;
-    private InetAddress group;
+    private final MulticastSocket socket;
+    private final String author;
+    private final InetAddress group;
 
     public AnnouncementServer(MulticastSocket socket, InetAddress group, String author) {
         this.socket = socket;
@@ -23,9 +23,7 @@ public class AnnouncementServer {
 
     public void sendMessage(Message message) throws IOException {
         byte[] data = Serialization.serializeObject(message);
-
-        DatagramPacket packet = new DatagramPacket(data, data.length, this.group, 4321);
-        this.socket.send(packet);
+        this.socket.send(new DatagramPacket(data, data.length, this.group, 4321));
     }
 
     public static void main(String[] args) throws IOException {
@@ -37,7 +35,7 @@ public class AnnouncementServer {
         server.sendMessage(message);
 
         do {
-            System.out.println("[Announcements] Enter announcement (type 'exit' to quit): ");
+            Menu.endServerHint(server.author);
             message = Menu.getMessage(server.author);
             server.sendMessage(message);
         } while (!message.getTopic().equalsIgnoreCase("end"));
@@ -45,7 +43,7 @@ public class AnnouncementServer {
         message = new Message(server.author, "Internal", "Server is shutting down");
         server.sendMessage(message);
 
-        System.out.println("[Announcements] Terminating server...");
+        Menu.terminateServerWarning(server.author);
         socket.close();
     }
 }
