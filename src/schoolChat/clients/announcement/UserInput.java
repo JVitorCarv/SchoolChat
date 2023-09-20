@@ -21,7 +21,7 @@ public class UserInput implements Runnable {
             if (input.equalsIgnoreCase("exit")) {
                 Menu.disconnectWarning();
                 this.socket.close();
-                System.exit(0);
+                break;
             }
         }
     }

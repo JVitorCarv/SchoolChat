@@ -24,7 +24,7 @@ public class ReceiveMessage implements Runnable {
             try {
                 this.socket.receive(packet);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                break;
             }
 
             Object receivedObject = null;

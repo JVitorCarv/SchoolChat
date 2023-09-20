@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.*;
 
 public class AnnouncementClient {
-    public static void execute() throws IOException {
+    public static void execute() throws IOException, InterruptedException {
         MulticastSocket socket = new MulticastSocket(4321);
         InetAddress ia = InetAddress.getByName("230.0.0.0");
         InetSocketAddress group = new InetSocketAddress(ia, 4321);
@@ -18,5 +18,8 @@ public class AnnouncementClient {
 
         Thread userInputThread = new Thread(new UserInput(socket));
         userInputThread.start();
+
+        receiveMessageThread.join();
+        userInputThread.join();
     }
 }
