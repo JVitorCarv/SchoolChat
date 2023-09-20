@@ -3,13 +3,14 @@ package schoolChat.clients;
 import schoolChat.clients.announcement.AnnouncementClient;
 import schoolChat.clients.chat.ChatClient;
 import schoolChat.views.Menu;
+import schoolChat.views.MenuGUI;
 
 import java.io.IOException;
 
 public class Client {
     public static void main(String[] args) throws IOException, InterruptedException {
+        String author = MenuGUI.getIdentification();
         Menu.printWelcome();
-        String author = Menu.getIdentification();
 
         int mode = 0;
         while (mode >= 0) {
