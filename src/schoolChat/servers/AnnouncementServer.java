@@ -1,28 +1,15 @@
 package schoolChat.servers;
 
 import schoolChat.models.Message;
-import schoolChat.models.Serialization;
 import schoolChat.views.Menu;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-public class AnnouncementServer {
-    private final MulticastSocket socket;
-    private final String author;
-    private final InetAddress group;
-
+public class AnnouncementServer extends Server {
     public AnnouncementServer(MulticastSocket socket, InetAddress group, String author) {
-        this.socket = socket;
-        this.group = group;
-        this.author = author;
-    }
-
-    public void sendMessage(Message message) throws IOException {
-        byte[] data = Serialization.serializeObject(message);
-        this.socket.send(new DatagramPacket(data, data.length, this.group, 4321));
+        super(socket, group, author);
     }
 
     public static void main(String[] args) throws IOException {
@@ -30,19 +17,18 @@ public class AnnouncementServer {
         InetAddress group = InetAddress.getByName("230.0.0.0");
         AnnouncementServer server = new AnnouncementServer(socket, group, "School Announcements");
 
-        Message message = new Message(server.author, "Internal", "Server is starting");
-        server.sendMessage(message);
+        server.sendMessage("Internal", "Server is starting");
 
+        Message message;
         do {
-            Menu.endServerHint(server.author);
-            message = Menu.getMessage(server.author);
+            Menu.endServerHint(server.getAuthor());
+            message = Menu.getMessage(server.getAuthor());
             server.sendMessage(message);
         } while (!message.getTopic().equalsIgnoreCase("end"));
 
-        message = new Message(server.author, "Internal", "Server is shutting down");
-        server.sendMessage(message);
+        server.sendMessage("Internal", "Server is shutting down");
 
-        Menu.terminateServerWarning(server.author);
+        Menu.terminateServerWarning(server.getAuthor());
         socket.close();
     }
 }

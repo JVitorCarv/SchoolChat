@@ -1,9 +1,15 @@
 package schoolChat.clients.announcement;
 
+import schoolChat.clients.Client;
+
 import java.io.IOException;
 import java.net.*;
 
-public class AnnouncementClient {
+public class AnnouncementClient extends Client {
+    public AnnouncementClient(MulticastSocket listenSocket, InetAddress ia, InetSocketAddress group, NetworkInterface ni) {
+        super(listenSocket, ia, group, ni);
+    }
+
     public static void execute() throws IOException, InterruptedException {
         MulticastSocket socket = new MulticastSocket(4321);
         InetAddress ia = InetAddress.getByName("230.0.0.0");
@@ -12,8 +18,7 @@ public class AnnouncementClient {
 
         socket.joinGroup(group, ni);
 
-        ReceiveMessage receiveMessage = new ReceiveMessage(socket);
-        Thread receiveMessageThread = new Thread(receiveMessage);
+        Thread receiveMessageThread = new Thread(new ReceiveMessage(socket));
         receiveMessageThread.start();
 
         Thread userInputThread = new Thread(new UserInput(socket));
