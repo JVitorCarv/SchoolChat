@@ -7,13 +7,13 @@ import java.time.format.DateTimeFormatter;
 public class Message implements Serializable {
     private String author;
     private LocalDateTime date;
-    private String topic;
+    //private String topic;
     private String content;
 
-    public Message(String author, String topic, String content) {
+    public Message(String author, String content) {
         this.author = author;
         this.date = LocalDateTime.now();
-        this.topic = topic;
+        //this.topic = topic;
         this.content = content;
     }
 
@@ -33,7 +33,6 @@ public class Message implements Serializable {
         return "schoolChat.models.Message{" +
                 "author='" + author + '\'' +
                 ", date=" + date +
-                ", topic='" + topic + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
@@ -52,14 +51,6 @@ public class Message implements Serializable {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
     }
 
     public String getContent() {

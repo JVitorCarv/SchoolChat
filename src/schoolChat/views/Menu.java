@@ -63,13 +63,11 @@ public class Menu {
 
     public static Message getMessage(String author) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Topic: ");
-        String topic = sc.nextLine();
 
         System.out.print("Content: ");
         String content = sc.nextLine();
 
-        return new Message(author, topic, content);
+        return new Message(author, content);
     }
 
     public static void endClientHint() {

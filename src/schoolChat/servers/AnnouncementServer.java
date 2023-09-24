@@ -24,7 +24,7 @@ public class AnnouncementServer extends Server {
             Menu.endServerHint(server.getAuthor());
             message = Menu.getMessage(server.getAuthor());
             server.sendMessage(message);
-        } while (!message.getTopic().equalsIgnoreCase("end"));
+        } while (!message.getContent().equalsIgnoreCase("end"));
 
         server.sendMessage("Internal", "Server is shutting down");
 

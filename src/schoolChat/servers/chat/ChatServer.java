@@ -28,9 +28,7 @@ public class ChatServer extends Server {
 
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
-                System.out.println("1");
                 listenSocket.receive(packet);
-                System.out.println("2");
             } catch (IOException e) {
                 break;
             }

@@ -38,7 +38,7 @@ public class ChatInput implements Runnable {
                 throw new RuntimeException(e);
             }
 
-            if (message.getTopic().equalsIgnoreCase("exit")) {
+            if (message.getContent().equalsIgnoreCase("exit")) {
                 Menu.disconnectWarning();
                 this.socket.close();
                 break;

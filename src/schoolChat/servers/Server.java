@@ -36,7 +36,7 @@ public class Server {
     }
 
     public void sendMessage(String topic, String content) throws IOException {
-        Message message = new Message(this.author, topic, content);
+        Message message = new Message(this.author, content);
         this.sendMessage(message);
     }
 
