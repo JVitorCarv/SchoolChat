@@ -20,7 +20,7 @@ public class ChatClient {
         Thread receiveMessageThread = new Thread(new ReceiveMessage(socket));
         receiveMessageThread.start();
 
-        Thread chatInputThread = new Thread(new ChatInput(socket, ia, 4321));
+        Thread chatInputThread = new Thread(new ChatInput(author, socket, ia, 4321));
         chatInputThread.start();
 
         receiveMessageThread.join();

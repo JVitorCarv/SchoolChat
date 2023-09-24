@@ -7,11 +7,10 @@ import schoolChat.views.MenuGUI;
 
 import java.io.IOException;
 
-public class ClientHandler {
+public class ClientHandler2 {
     public static void main(String[] args) throws IOException, InterruptedException {
         String author = MenuGUI.getIdentification();
         Menu.printWelcome();
-        System.out.println(author);
 
         int mode = 0;
         while (mode >= 0) {

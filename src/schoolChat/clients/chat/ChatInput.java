@@ -10,11 +10,13 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 public class ChatInput implements Runnable {
+    private final String author;
     private final MulticastSocket socket;
     private final InetAddress group;
     private final int port;
 
-    public ChatInput(MulticastSocket socket, InetAddress group, int port) {
+    public ChatInput(String author, MulticastSocket socket, InetAddress group, int port) {
+        this.author = author;
         this.socket = socket;
         this.group = group;
         this.port = port;
@@ -25,7 +27,7 @@ public class ChatInput implements Runnable {
         Menu.endClientHint();
         while (true) {
             byte[] buffer;
-            Message message = Menu.getMessage("Author");
+            Message message = Menu.getMessage(author);
             try {
                 buffer = Serialization.serializeObject(message);
             } catch (IOException e) {
