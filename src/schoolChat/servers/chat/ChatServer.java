@@ -1,6 +1,7 @@
 package schoolChat.servers.chat;
 
 import schoolChat.models.Message;
+import schoolChat.models.Operational;
 import schoolChat.models.Serialization;
 import schoolChat.servers.Server;
 import schoolChat.views.Menu;
@@ -16,12 +17,13 @@ public class ChatServer extends Server {
     }
 
     public static void main(String[] args) throws IOException {
-        MulticastSocket sendSocket = new MulticastSocket();
-        MulticastSocket listenSocket = new MulticastSocket();
+        int port = 4322;
+        MulticastSocket sendSocket = new MulticastSocket(port);
+        MulticastSocket listenSocket = new MulticastSocket(port);
         InetAddress group = InetAddress.getByName("230.0.0.0");
         ChatServer server = new ChatServer(sendSocket, listenSocket, group, "Chat Server");
 
-        server.sendMessage("Hallo", "World");
+        server.sendMessage("Hallo", "World", port);
 
         while (true) {
             byte[] buffer = new byte[1024];
@@ -41,7 +43,11 @@ public class ChatServer extends Server {
             }
 
             if (receivedObject instanceof Message message) {
-                server.sendMessage(message);
+                if (message.getOperation().equals(Operational.DISCONNECTED)) {
+                    //server.sendMessage(new Message("ChatServer", message.getAuthor() + "disconnected"));
+                } else {
+                    //server.sendMessage(message);
+                }
                 System.out.println(message.toChatFormat());
             } else {
                 Menu.unknownTypeError();

@@ -1,9 +1,11 @@
 package schoolChat.clients.chat;
 
 import schoolChat.models.Message;
+import schoolChat.models.Operational;
 import schoolChat.models.Serialization;
 import schoolChat.views.Menu;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -22,6 +24,14 @@ public class ChatInput implements Runnable {
         this.port = port;
     }
 
+    public void sendMessage(byte[] buffer) {
+        try {
+            socket.send(new DatagramPacket(buffer, buffer.length, this.group, this.port));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void run() {
         Menu.endClientHint();
@@ -34,16 +44,19 @@ public class ChatInput implements Runnable {
                 throw new RuntimeException(e);
             }
 
-            try {
-                socket.send(new DatagramPacket(buffer, buffer.length, this.group, this.port));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
             if (message.getContent().equalsIgnoreCase("exit")) {
                 Menu.disconnectWarning();
+                Message disconnect = new Message(author, Operational.DISCONNECTED);
+                try {
+                    buffer = Serialization.serializeObject(disconnect);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                sendMessage(buffer);
                 this.socket.close();
                 break;
+            } else {
+                sendMessage(buffer);
             }
         }
     }

@@ -1,4 +1,4 @@
-package schoolChat.clients;
+package schoolChat;
 
 import schoolChat.clients.announcement.AnnouncementClient;
 import schoolChat.clients.chat.ChatClient;
@@ -7,7 +7,7 @@ import schoolChat.views.MenuGUI;
 
 import java.io.IOException;
 
-public class ClientHandler {
+public class ClientHandler3 {
     public static void main(String[] args) throws IOException, InterruptedException {
         String author = MenuGUI.getIdentification();
         Menu.printWelcome();

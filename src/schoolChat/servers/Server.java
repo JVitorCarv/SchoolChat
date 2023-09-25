@@ -35,13 +35,13 @@ public class Server {
         return group;
     }
 
-    public void sendMessage(String topic, String content) throws IOException {
+    public void sendMessage(String topic, String content, int port) throws IOException {
         Message message = new Message(this.author, content);
-        this.sendMessage(message);
+        this.sendMessage(message, port);
     }
 
-    public void sendMessage(Message message) throws IOException {
+    public void sendMessage(Message message, int port) throws IOException {
         byte[] data = Serialization.serializeObject(message);
-        sendSocket.send(new DatagramPacket(data, data.length, this.group, 4321));
+        sendSocket.send(new DatagramPacket(data, data.length, this.group, port));
     }
 }

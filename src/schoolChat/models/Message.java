@@ -9,12 +9,19 @@ public class Message implements Serializable {
     private LocalDateTime date;
     //private String topic;
     private String content;
+    private Operational operation;
 
     public Message(String author, String content) {
         this.author = author;
         this.date = LocalDateTime.now();
         //this.topic = topic;
         this.content = content;
+    }
+
+    public Message(String author, Operational operation) {
+        this.author = author;
+        this.date = LocalDateTime.now();
+        this.operation = operation;
     }
 
     public String toChatFormat() {
@@ -59,5 +66,13 @@ public class Message implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Operational getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operational operation) {
+        this.operation = operation;
     }
 }
