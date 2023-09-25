@@ -35,7 +35,11 @@ public class ReceiveMessage implements Runnable {
             }
 
             if (receivedObject instanceof Message message) {
-                System.out.println(message.toChatFormat());
+                if (message.getAuthor().equalsIgnoreCase("Chat Server")) {
+                    System.out.println(message.toServerFormat());
+                } else {
+                    System.out.println(message.toChatFormat());
+                }
             } else {
                 Menu.unknownTypeError();
             }

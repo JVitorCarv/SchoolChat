@@ -1,21 +1,19 @@
 package schoolChat.clients;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 
 public class Client {
-    private final MulticastSocket listenSocket;
-    private final InetAddress ia;
-    private final InetSocketAddress group;
-    private final NetworkInterface ni;
+    public static MulticastSocket getMulticastSocket(int port, String host) throws IOException {
+        MulticastSocket socket = new MulticastSocket(port);
+        InetAddress ia = InetAddress.getByName(host);
+        InetSocketAddress group = new InetSocketAddress(ia, port);
+        NetworkInterface ni = NetworkInterface.getByInetAddress(ia);
 
-    public Client(MulticastSocket listenSocket, InetAddress ia, InetSocketAddress group, NetworkInterface ni) {
-        this.listenSocket = listenSocket;
-        this.ia = ia;
-        this.group = group;
-        this.ni = ni;
+        socket.joinGroup(group, ni);
+        return socket;
     }
-
 }

@@ -1,6 +1,7 @@
-package schoolChat.servers;
+package schoolChat.servers.announcement;
 
 import schoolChat.models.Message;
+import schoolChat.servers.Server;
 import schoolChat.views.Menu;
 
 import java.io.IOException;

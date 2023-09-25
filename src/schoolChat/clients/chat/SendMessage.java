@@ -1,12 +1,9 @@
-package schoolChat.clients.pqp;
+package schoolChat.clients.chat;
 
 import schoolChat.models.Message;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.Socket;
-import java.net.SocketException;
 
 public class SendMessage implements Runnable {
     private ObjectOutputStream objectOutputStream;

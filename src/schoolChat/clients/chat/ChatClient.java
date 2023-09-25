@@ -2,28 +2,39 @@ package schoolChat.clients.chat;
 
 import schoolChat.clients.announcement.ReceiveMessage;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
+import java.io.*;
+import java.net.*;
 
 public class ChatClient {
     public static void execute(String author) throws IOException, InterruptedException {
-        MulticastSocket socket = new MulticastSocket(4323);
-        InetAddress ia = InetAddress.getByName("230.0.0.0");
-        InetSocketAddress group = new InetSocketAddress(ia, 4322);
+        MulticastSocket multicastSocket = new MulticastSocket(6789);
+        InetAddress ia = InetAddress.getByName("224.0.0.1");
+        InetSocketAddress multicastGroup = new InetSocketAddress(ia, 6789);
         NetworkInterface ni = NetworkInterface.getByInetAddress(ia);
 
-        socket.joinGroup(group, ni);
+        multicastSocket.joinGroup(multicastGroup, ni);
 
-        Thread receiveMessageThread = new Thread(new ReceiveMessage(socket));
-        receiveMessageThread.start();
+        Socket socket = null;
+        try {
+            socket = new Socket("localhost", 12345);
+        } catch (ConnectException e) {
+            System.out.println("Could not connect. Please try again later.");
+        }
 
-        Thread chatInputThread = new Thread(new ChatInput(author, socket, ia, 4322));
-        chatInputThread.start();
+        if (socket != null) {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-        receiveMessageThread.join();
-        chatInputThread.join();
+            Runnable sendMessageRunnable = new SendMessage(multicastSocket, objectOutputStream, author);
+            Runnable receiveMessageRunnable = new ReceiveMessage(multicastSocket);
+
+            Thread sendThread = new Thread(sendMessageRunnable);
+            Thread receiveThread = new Thread(receiveMessageRunnable);
+
+            sendThread.start();
+            receiveThread.start();
+
+            sendThread.join();
+            receiveThread.join();
+        }
     }
 }

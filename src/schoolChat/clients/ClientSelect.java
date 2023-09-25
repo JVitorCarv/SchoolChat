@@ -1,13 +1,13 @@
 package schoolChat.clients;
 
 import schoolChat.clients.announcement.AnnouncementClient;
-import schoolChat.clients.pqp.ChatClient;
+import schoolChat.clients.chat.ChatClient;
 import schoolChat.views.Menu;
 import schoolChat.views.MenuGUI;
 
 import java.io.IOException;
 
-public class ClientHandler {
+public class ClientSelect {
     public static void main(String[] args) throws IOException, InterruptedException {
         String author = MenuGUI.getIdentification();
         Menu.printWelcome();
