@@ -5,6 +5,10 @@ import java.net.*;
 
 public class ChatClient {
     public static void execute(String author) throws IOException, InterruptedException {
+        MulticastSocket multicastSocket = new MulticastSocket(6789);
+        InetAddress multicastGroup = InetAddress.getByName("224.0.0.1");
+        multicastSocket.joinGroup(multicastGroup);
+
         Socket socket = null;
         try {
             socket = new Socket("localhost", 12345);
@@ -17,7 +21,7 @@ public class ChatClient {
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
             Runnable sendMessageRunnable = new SendMessage(objectOutputStream, author);
-            Runnable receiveMessageRunnable = new ReceiveMessage(objectInputStream);
+            Runnable receiveMessageRunnable = new ReceiveMessage(multicastGroup, 6789);
 
             Thread sendThread = new Thread(sendMessageRunnable);
             Thread receiveThread = new Thread(receiveMessageRunnable);

@@ -1,6 +1,7 @@
 package schoolChat.servers.chat;
 
 import schoolChat.models.Message;
+import schoolChat.models.Serialization;
 import schoolChat.views.Menu;
 
 import java.io.*;
@@ -10,10 +11,17 @@ import java.util.List;
 
 public class ChatServer {
     private static List<ObjectOutputStream> clientObjectOutputStreams = new ArrayList<>();
+    private static MulticastSocket multicastSocket;
+    private static InetAddress multicastGroup;
+    private static int multicastPort = 6789;
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(12345);
         Menu.startServerNotice("Chat Server");
+
+        multicastSocket = new MulticastSocket(multicastPort);
+        multicastGroup = InetAddress.getByName("224.0.0.1");
+        multicastSocket.joinGroup(multicastGroup);
 
         while (true) {
             Socket clientSocket = serverSocket.accept();
@@ -28,13 +36,22 @@ public class ChatServer {
     }
 
     public static void broadcastMessage(Message message) {
-        for (ObjectOutputStream objectOutputStream : clientObjectOutputStreams) {
-            try {
-                objectOutputStream.writeObject(message);
-                objectOutputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            // Convert the message to bytes
+            byte[] messageBytes = Serialization.serializeObject(message);
+
+            // Create a DatagramPacket for multicast
+            DatagramPacket packet = new DatagramPacket(
+                    messageBytes,
+                    messageBytes.length,
+                    multicastGroup, // Multicast group InetAddress
+                    multicastPort   // Multicast port
+            );
+
+            // Send the message to the multicast group
+            multicastSocket.send(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
