@@ -11,12 +11,7 @@ public class ChatClient {
     public static void execute(String author) throws IOException, InterruptedException {
         MulticastSocket multicastSocket = Client.getMulticastSocket(6789, "224.0.0.1");
 
-        Socket socket = null;
-        try {
-            socket = new Socket("localhost", 12345);
-        } catch (ConnectException e) {
-            System.out.println("Could not connect. Please try again later.");
-        }
+        Socket socket = Client.getSocket(12345, "localhost");
 
         if (socket != null) {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
