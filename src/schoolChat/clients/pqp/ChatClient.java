@@ -20,8 +20,8 @@ public class ChatClient {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-            Runnable sendMessageRunnable = new SendMessage(objectOutputStream, author);
-            Runnable receiveMessageRunnable = new ReceiveMessage(multicastGroup, 6789);
+            Runnable sendMessageRunnable = new SendMessage(multicastSocket, objectOutputStream, author);
+            Runnable receiveMessageRunnable = new ReceiveMessage(multicastSocket, multicastGroup, 6789);
 
             Thread sendThread = new Thread(sendMessageRunnable);
             Thread receiveThread = new Thread(receiveMessageRunnable);

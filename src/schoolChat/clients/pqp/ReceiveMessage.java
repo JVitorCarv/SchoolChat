@@ -13,17 +13,15 @@ public class ReceiveMessage implements Runnable {
     private InetAddress multicastGroup;
     private int multicastPort;
 
-    public ReceiveMessage(InetAddress multicastGroup, int multicastPort) {
+    public ReceiveMessage(MulticastSocket multicastSocket, InetAddress multicastGroup, int multicastPort) {
         this.multicastGroup = multicastGroup;
         this.multicastPort = multicastPort;
+        this.multicastSocket = multicastSocket;
     }
 
     @Override
     public void run() {
         try {
-            multicastSocket = new MulticastSocket(multicastPort);
-            multicastSocket.joinGroup(multicastGroup);
-
             while (true) {
                 byte[] buffer = new byte[1024];
 
@@ -51,8 +49,6 @@ public class ReceiveMessage implements Runnable {
                     Menu.unknownTypeError();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
             if (multicastSocket != null && !multicastSocket.isClosed()) {
                 multicastSocket.close();
