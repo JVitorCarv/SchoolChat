@@ -37,18 +37,10 @@ public class ChatServer {
 
     public static void broadcastMessage(Message message) {
         try {
-            // Convert the message to bytes
             byte[] messageBytes = Serialization.serializeObject(message);
 
-            // Create a DatagramPacket for multicast
-            DatagramPacket packet = new DatagramPacket(
-                    messageBytes,
-                    messageBytes.length,
-                    multicastGroup, // Multicast group InetAddress
-                    multicastPort   // Multicast port
-            );
+            DatagramPacket packet = new DatagramPacket(messageBytes, messageBytes.length, multicastGroup, multicastPort);
 
-            // Send the message to the multicast group
             multicastSocket.send(packet);
         } catch (IOException e) {
             e.printStackTrace();
