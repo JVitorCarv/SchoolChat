@@ -1,60 +1,44 @@
 package schoolChat.servers.chat;
 
 import schoolChat.models.Message;
-import schoolChat.models.Operational;
-import schoolChat.models.Serialization;
-import schoolChat.servers.Server;
 import schoolChat.views.Menu;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ChatServer extends Server {
-    public ChatServer(MulticastSocket sendSocket, MulticastSocket listenSocket, InetAddress group, String author) {
-        super(sendSocket, listenSocket, group, author);
-    }
+public class ChatServer {
+    private static List<ObjectOutputStream> clientObjectOutputStreams = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        int port = 4322;
-        MulticastSocket sendSocket = new MulticastSocket(port);
-        MulticastSocket listenSocket = new MulticastSocket(port);
-        InetAddress group = InetAddress.getByName("230.0.0.0");
-        ChatServer server = new ChatServer(sendSocket, listenSocket, group, "Chat Server");
-
-        server.sendMessage("Hallo", "World", port);
+        ServerSocket serverSocket = new ServerSocket(12345);
+        Menu.startServerNotice("Chat Server");
 
         while (true) {
-            byte[] buffer = new byte[1024];
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
 
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            clientObjectOutputStreams.add(objectOutputStream);
+
+            Thread clientThread = new ClientHandler(clientSocket, objectOutputStream);
+            clientThread.start();
+        }
+    }
+
+    public static void broadcastMessage(Message message) {
+        for (ObjectOutputStream objectOutputStream : clientObjectOutputStreams) {
             try {
-                listenSocket.receive(packet);
+                objectOutputStream.writeObject(message);
+                objectOutputStream.flush();
             } catch (IOException e) {
-                break;
-            }
-
-            Object receivedObject;
-            try {
-                receivedObject = Serialization.deserializeObject(packet.getData());
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (receivedObject instanceof Message message) {
-                if (message.getOperation().equals(Operational.DISCONNECTED)) {
-                    //server.sendMessage(new Message("ChatServer", message.getAuthor() + "disconnected"));
-                } else {
-                    //server.sendMessage(message);
-                }
-                System.out.println(message.toChatFormat());
-            } else {
-                Menu.unknownTypeError();
+                e.printStackTrace();
             }
         }
+    }
 
-        listenSocket.close();
-        sendSocket.close();
+    public static void removeClientOutputStream(ObjectOutputStream objectOutputStream) {
+        clientObjectOutputStreams.remove(objectOutputStream);
     }
 }

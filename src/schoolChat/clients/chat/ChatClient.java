@@ -10,7 +10,7 @@ import java.net.NetworkInterface;
 
 public class ChatClient {
     public static void execute(String author) throws IOException, InterruptedException {
-        MulticastSocket socket = new MulticastSocket(4322);
+        MulticastSocket socket = new MulticastSocket(4323);
         InetAddress ia = InetAddress.getByName("230.0.0.0");
         InetSocketAddress group = new InetSocketAddress(ia, 4322);
         NetworkInterface ni = NetworkInterface.getByInetAddress(ia);

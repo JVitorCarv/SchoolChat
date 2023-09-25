@@ -43,6 +43,10 @@ public class Menu {
         System.out.println("Type 'exit' to leave");
     }
 
+    public static void startServerNotice(String server) {
+        System.out.println("[" + server + "] Is up and running!");
+    }
+
     public static void endServerHint(String server) {
         System.out.println("[" + server + "] Enter announcement (type 'end' in 'Topic' to quit): ");
     }

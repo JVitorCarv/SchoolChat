@@ -35,6 +35,17 @@ public class Message implements Serializable {
                 this.content;
     }
 
+    public String toServerFormat() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = this.date.format(dateFormatter);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = this.date.format(timeFormatter);
+        return "(" + formattedDate + ")" +
+                " [" + formattedTime + "] " +
+                this.author + ">> " +
+                this.content;
+    }
+
     @Override
     public String toString() {
         return "schoolChat.models.Message{" +
