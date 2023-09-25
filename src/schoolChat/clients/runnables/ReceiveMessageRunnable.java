@@ -1,4 +1,4 @@
-package schoolChat.clients.announcement;
+package schoolChat.clients.runnables;
 
 import schoolChat.models.Message;
 import schoolChat.models.Serialization;
@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 
-public class ReceiveMessage implements Runnable {
+public class ReceiveMessageRunnable implements Runnable {
     private final MulticastSocket socket;
 
-    public ReceiveMessage(MulticastSocket socket) {
+    public ReceiveMessageRunnable(MulticastSocket socket) {
         this.socket = socket;
     }
 

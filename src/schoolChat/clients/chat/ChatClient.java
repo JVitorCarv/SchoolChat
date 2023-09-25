@@ -1,18 +1,15 @@
 package schoolChat.clients.chat;
 
-import schoolChat.clients.announcement.ReceiveMessage;
+import schoolChat.clients.Client;
+import schoolChat.clients.runnables.ReceiveMessageRunnable;
+import schoolChat.clients.runnables.SendMessageRunnable;
 
 import java.io.*;
 import java.net.*;
 
 public class ChatClient {
     public static void execute(String author) throws IOException, InterruptedException {
-        MulticastSocket multicastSocket = new MulticastSocket(6789);
-        InetAddress ia = InetAddress.getByName("224.0.0.1");
-        InetSocketAddress multicastGroup = new InetSocketAddress(ia, 6789);
-        NetworkInterface ni = NetworkInterface.getByInetAddress(ia);
-
-        multicastSocket.joinGroup(multicastGroup, ni);
+        MulticastSocket multicastSocket = Client.getMulticastSocket(6789, "224.0.0.1");
 
         Socket socket = null;
         try {
@@ -24,8 +21,8 @@ public class ChatClient {
         if (socket != null) {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-            Runnable sendMessageRunnable = new SendMessage(multicastSocket, objectOutputStream, author);
-            Runnable receiveMessageRunnable = new ReceiveMessage(multicastSocket);
+            Runnable sendMessageRunnable = new SendMessageRunnable(multicastSocket, objectOutputStream, author);
+            Runnable receiveMessageRunnable = new ReceiveMessageRunnable(multicastSocket);
 
             Thread sendThread = new Thread(sendMessageRunnable);
             Thread receiveThread = new Thread(receiveMessageRunnable);

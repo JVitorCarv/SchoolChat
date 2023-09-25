@@ -1,16 +1,16 @@
-package schoolChat.clients.chat;
+package schoolChat.clients.runnables;
 
 import schoolChat.models.Message;
 
 import java.io.*;
 import java.net.MulticastSocket;
 
-public class SendMessage implements Runnable {
+public class SendMessageRunnable implements Runnable {
     private ObjectOutputStream objectOutputStream;
     private String author;
     private MulticastSocket socket;
 
-    public SendMessage(MulticastSocket socket, ObjectOutputStream objectOutputStream, String author) {
+    public SendMessageRunnable(MulticastSocket socket, ObjectOutputStream objectOutputStream, String author) {
         this.socket = socket;
         this.objectOutputStream = objectOutputStream;
         this.author = author;
