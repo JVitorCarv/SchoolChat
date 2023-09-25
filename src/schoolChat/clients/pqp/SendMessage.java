@@ -30,6 +30,7 @@ public class SendMessage implements Runnable {
     public void run() {
         try {
             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+            sendMessage(new Message(author, "connect"));
 
             while (true) {
                 System.out.print("$ ");

@@ -26,7 +26,11 @@ public class ClientHandler extends Thread {
             while (true) {
                 Message receivedMessage = (Message) objectInputStream.readObject();
 
-                System.out.println(receivedMessage.toChatFormat());
+                if (receivedMessage.getContent().equalsIgnoreCase("connect")) {
+                    System.out.println(receivedMessage.getAuthor() + " has connected");
+                    ChatServer.broadcastMessage(new Message("Chat Server", receivedMessage.getAuthor() + " has connected"));
+                    continue;
+                }
 
                 if (receivedMessage.getContent().equalsIgnoreCase("exit")) {
                     try {
@@ -40,6 +44,8 @@ public class ClientHandler extends Thread {
                     } catch (EOFException ignored) {}
                     break;
                 }
+
+                System.out.println(receivedMessage.toChatFormat());
 
                 ChatServer.broadcastMessage(receivedMessage);
             }

@@ -40,10 +40,10 @@ public class Message implements Serializable {
         String formattedDate = this.date.format(dateFormatter);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String formattedTime = this.date.format(timeFormatter);
-        return "(" + formattedDate + ")" +
+        return "= (" + formattedDate + ")" +
                 " [" + formattedTime + "] " +
-                this.author + ">> " +
-                this.content;
+                this.author + " >> " +
+                this.content + " =";
     }
 
     @Override
