@@ -32,4 +32,32 @@ public class MenuGUI {
     public static String getMessage(String author) {
         return MenuGUI.getInfo("Type your message: ", "Chat - " + author);
     }
+
+    public static int getMode(String labelText, String titleText) {
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel(labelText);
+
+        String[] options = new String[]{"Announcements", "Chat"};
+
+        ImageIcon icon = new ImageIcon("school_logo.png");
+
+        int option = JOptionPane.showOptionDialog(
+                null,
+                label,
+                titleText,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                icon,
+                options,
+                options[0]
+        );
+
+        if (option == 0) {
+            return 1;
+        } else if (option == 1) {
+            return 2;
+        } else {
+            return -1;
+        }
+    }
 }

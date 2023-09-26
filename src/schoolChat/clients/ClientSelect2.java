@@ -10,11 +10,10 @@ import java.io.IOException;
 public class ClientSelect2 {
     public static void main(String[] args) throws IOException, InterruptedException {
         String author = MenuGUI.getIdentification();
-        Menu.printWelcome();
 
         int mode = 0;
         while (mode >= 0) {
-            mode = Menu.getMode();
+            mode = MenuGUI.getMode("Select a mode", "School Chat");
             if (mode < 0) {
                 Menu.disconnectWarning();
             } else if (mode == 1) {

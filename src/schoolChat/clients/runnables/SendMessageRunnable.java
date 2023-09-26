@@ -36,6 +36,11 @@ public class SendMessageRunnable implements Runnable {
 
             while (true) {
                 String userMessage = MenuGUI.getMessage(author);
+                userMessage = userMessage.trim();
+
+                if (userMessage.isBlank() || userMessage.isEmpty()) {
+                    continue;
+                }
 
                 if (userMessage.equalsIgnoreCase("exit")) {
                     Message exitMessage = new Message(author, "exit");
