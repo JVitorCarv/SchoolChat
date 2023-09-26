@@ -45,4 +45,8 @@ public class Menu {
     public static void disconnectWarning() {
         System.out.println("== Disconnecting... ==");
     }
+
+    public static void printLine() {
+        System.out.println("=========================================================================");
+    }
 }

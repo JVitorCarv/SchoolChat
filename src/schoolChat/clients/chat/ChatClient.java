@@ -3,6 +3,7 @@ package schoolChat.clients.chat;
 import schoolChat.clients.Client;
 import schoolChat.clients.runnables.ReceiveMessageRunnable;
 import schoolChat.clients.runnables.SendMessageRunnable;
+import schoolChat.views.Menu;
 
 import java.io.*;
 import java.net.*;

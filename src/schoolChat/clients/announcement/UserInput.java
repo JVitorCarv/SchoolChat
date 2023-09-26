@@ -19,7 +19,6 @@ public class UserInput implements Runnable {
         while (true) {
             String input = sc.nextLine();
             if (input.equalsIgnoreCase("exit")) {
-                Menu.disconnectWarning();
                 this.socket.close();
                 break;
             }
