@@ -3,9 +3,9 @@ package schoolChat.views;
 import javax.swing.*;
 
 public class MenuGUI {
-    public static String getIdentification() {
+    public static String getInfo(String labelText, String titleText) {
         JPanel panel = new JPanel();
-        JLabel label = new JLabel("Type your username: ");
+        JLabel label = new JLabel(labelText);
         JTextField textField = new JTextField(20);
 
         panel.add(label);
@@ -15,38 +15,21 @@ public class MenuGUI {
 
         ImageIcon icon = new ImageIcon("school_logo.png");
 
-        int option = JOptionPane.showOptionDialog(null, panel, "What is your name?",
+        int option = JOptionPane.showOptionDialog(null, panel, titleText,
                 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                 icon, options, options[0]);
 
         if (option == JOptionPane.OK_OPTION) {
             return textField.getText();
         } else {
-            return "exit"; // Return an empty string or handle it as needed
+            return "exit";
         }
     }
-
+    public static String getIdentification() {
+        return MenuGUI.getInfo("Type your username: ", "What is your name?");
+    }
 
     public static String getMessage(String author) {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel("Type your message: ");
-        JTextField textField = new JTextField(20);
-
-        panel.add(label);
-        panel.add(textField);
-
-        String[] options = new String[]{"Send"};
-
-        ImageIcon icon = new ImageIcon("school_logo.png");
-
-        int option = JOptionPane.showOptionDialog(null, panel, "Chat - " + author,
-                JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                icon, options, options[0]);
-
-        if (option == JOptionPane.OK_OPTION) {
-            return textField.getText();
-        } else {
-            return "exit"; // Return an empty string or handle it as needed
-        }
+        return MenuGUI.getInfo("Type your message: ", "Chat - " + author);
     }
 }
