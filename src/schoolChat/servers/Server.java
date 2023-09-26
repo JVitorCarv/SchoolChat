@@ -12,19 +12,11 @@ public class Server {
     private final String author;
     private final InetAddress group;
     private final MulticastSocket sendSocket;
-    private MulticastSocket listenSocket;
 
     public Server(MulticastSocket sendSocket, InetAddress group, String author) {
         this.author = author;
         this.group = group;
         this.sendSocket = sendSocket;
-    }
-
-    public Server(MulticastSocket sendSocket, MulticastSocket listenSocket, InetAddress group, String author) {
-        this.author = author;
-        this.group = group;
-        this.sendSocket = sendSocket;
-        this.listenSocket = listenSocket;
     }
 
     public String getAuthor() {
@@ -35,7 +27,7 @@ public class Server {
         return group;
     }
 
-    public void sendMessage(String topic, String content, int port) throws IOException {
+    public void sendMessage(String content, int port) throws IOException {
         Message message = new Message(this.author, content);
         this.sendMessage(message, port);
     }

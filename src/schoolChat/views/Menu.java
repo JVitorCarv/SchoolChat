@@ -33,7 +33,7 @@ public class Menu {
     public static Message getMessage(String author) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Content: ");
+        System.out.print("$ ");
         String content = sc.nextLine();
 
         return new Message(author, content);
@@ -53,6 +53,14 @@ public class Menu {
 
     public static void terminateServerWarning(String server) {
         System.out.println("[" + server + "]  Terminating server...");
+    }
+
+    public static void logUserConnected(String author) {
+        System.out.println(author + " has connected");
+    }
+
+    public static void logUserDisconnected(String author) {
+        System.out.println(author + " has disconnected");
     }
 
     public static void unknownTypeError() {

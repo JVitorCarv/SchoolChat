@@ -19,7 +19,7 @@ public class AnnouncementServer extends Server {
         InetAddress group = InetAddress.getByName("230.0.0.0");
         AnnouncementServer server = new AnnouncementServer(socket, group, "School Announcements");
 
-        server.sendMessage("Internal", "Server is starting", port);
+        server.sendMessage("Server is starting", port);
 
         Message message;
         do {
@@ -28,7 +28,7 @@ public class AnnouncementServer extends Server {
             server.sendMessage(message, port);
         } while (!message.getContent().equalsIgnoreCase("end"));
 
-        server.sendMessage("Internal", "Server is shutting down", port);
+        server.sendMessage("Server is shutting down", port);
 
         Menu.terminateServerWarning(server.getAuthor());
         socket.close();

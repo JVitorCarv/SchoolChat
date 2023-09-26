@@ -1,6 +1,7 @@
 package schoolChat.servers.chat;
 
 import schoolChat.models.Message;
+import schoolChat.views.Menu;
 
 import java.io.*;
 import java.net.*;
@@ -27,14 +28,14 @@ public class ClientHandler extends Thread {
                 Message receivedMessage = (Message) objectInputStream.readObject();
 
                 if (receivedMessage.getContent().equalsIgnoreCase("connect")) {
-                    System.out.println(receivedMessage.getAuthor() + " has connected");
+                    Menu.logUserConnected(receivedMessage.getAuthor());
                     ChatServer.broadcastMessage(new Message("Chat Server", receivedMessage.getAuthor() + " has connected"));
                     continue;
                 }
 
                 if (receivedMessage.getContent().equalsIgnoreCase("exit")) {
                     try {
-                        System.out.println(receivedMessage.getAuthor() + " has disconnected");
+                        Menu.logUserDisconnected(receivedMessage.getAuthor());
                         ChatServer.broadcastMessage(new Message("Chat Server", receivedMessage.getAuthor() + " has disconnected"));
 
                         objectOutputStream.close();
