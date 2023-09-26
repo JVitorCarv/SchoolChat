@@ -20,7 +20,7 @@ public class ChatServer {
         Menu.startServerNotice("Chat Server");
 
         multicastSocket = new MulticastSocket(multicastPort);
-        multicastGroup = InetAddress.getByName("224.0.0.1");
+        multicastGroup = InetAddress.getByName("239.255.255.250");
         multicastSocket.joinGroup(multicastGroup);
 
         while (true) {

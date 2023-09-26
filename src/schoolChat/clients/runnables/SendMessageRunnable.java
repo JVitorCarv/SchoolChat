@@ -1,6 +1,7 @@
 package schoolChat.clients.runnables;
 
 import schoolChat.models.Message;
+import schoolChat.views.MenuGUI;
 
 import java.io.*;
 import java.net.MulticastSocket;
@@ -34,8 +35,7 @@ public class SendMessageRunnable implements Runnable {
             sendMessage(new Message(author, "connect"));
 
             while (true) {
-                System.out.print("$ ");
-                String userMessage = userInput.readLine();
+                String userMessage = MenuGUI.getMessage(author);
 
                 if (userMessage.equalsIgnoreCase("exit")) {
                     Message exitMessage = new Message(author, "exit");
@@ -46,7 +46,7 @@ public class SendMessageRunnable implements Runnable {
                 Message message = new Message(author, userMessage);
                 sendMessage(message);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

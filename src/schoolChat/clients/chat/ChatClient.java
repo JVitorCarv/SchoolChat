@@ -9,7 +9,7 @@ import java.net.*;
 
 public class ChatClient {
     public static void execute(String author) throws IOException, InterruptedException {
-        MulticastSocket multicastSocket = Client.getMulticastSocket(6789, "224.0.0.1");
+        MulticastSocket multicastSocket = Client.getMulticastSocket(6789, "239.255.255.250");
 
         Socket socket = Client.getSocket(12345, "localhost");
 

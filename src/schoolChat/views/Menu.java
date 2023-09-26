@@ -48,7 +48,7 @@ public class Menu {
     }
 
     public static void endServerHint(String server) {
-        System.out.println("[" + server + "] Enter announcement (type 'end' in 'Topic' to quit): ");
+        System.out.println("[" + server + "] Enter announcement (type 'end' to quit): ");
     }
 
     public static void terminateServerWarning(String server) {
