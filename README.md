@@ -1,30 +1,42 @@
-# SchoolChat
+# README - SchoolChat
+Bem-vindo à solução de comunicação desenvolvida especialmente para atender às necessidades dos estudantes do 5º período da CESAR School. Nossa plataforma foi projetada para oferecer uma experiência de comunicação eficaz e conveniente, com foco nas demandas específicas desse público-alvo, e dessa forma tornar os nossos WhatsApps menos poluídos. Este é um projeto de chat em Java que consiste em um cliente e um servidor de chat. O projeto inclui funcionalidades para anúncios escolares e bate-papo em grupo.
 
-## Introdução
-O SchoolChat é uma solução de comunicação desenvolvida especialmente para atender às necessidades dos estudantes do 5º período da CESAR School. 
-Foi projetada para oferecer uma experiência de comunicação eficaz e conveniente, com foco nas demandas específicas desse público-alvo, e tornar os nossos WhatsApps menos poluídos.
+## Estrutura do Projeto
 
-## Cliente
-Nossa solução é acessível por meio de um cliente, que permite aos estudantes escolherem entre dois canais principais: o canal de avisos e o canal de conversas. 
-O canal de avisos é projetado para que os clientes recebam informações vitais sem a capacidade de enviar mensagens, garantindo que todos estejam bem informados enquanto o chat se mantém limpo. Por outro lado, o canal de conversas oferece uma plataforma na qual os clientes podem trocar mensagens com outros estudantes.
+O projeto está organizado da seguinte maneira:
 
+- `AnnouncementClient` e `AnnouncementServer`: Classes relacionadas ao cliente e ao servidor de anúncios escolares.
+- `ChatClient` e `ChatServer`: Classes relacionadas ao cliente e ao servidor de chat em grupo.
+- `Client` e `Server`: Classes utilitárias que fornecem funcionalidades comuns para as classes de cliente e servidor.
+- `ClientSelect`: Classe principal para selecionar o modo de operação do cliente.
+- `ClientHandler`: Classe que lida com as conexões de cliente no servidor de chat.
+- `UserInput`: Classe que lida com a entrada do usuário no cliente.
 
-## Servidor
-A infraestrutura da nossa solução é composta por dois servidores distintos para melhor atender às necessidades dos estudantes. O primeiro servidor é dedicado aos avisos, onde os clientes recebem informações vitais e atualizações essenciais da CESAR School. O segundo servidor é dedicado às conversas, permitindo que os clientes interajam entre si e recebam mensagens programadas pelo servidor, por exemplo, quando um usuário se desconecta, mantendo assim um ambiente de comunicação sempre ativo.
+## Funcionalidades
 
-## Composição da mensagem
-As mensagens trocadas em nossa plataforma seguem um formato claro e organizado:  
+### Anúncios Escolares
 
+- O cliente de anúncios escolares (`AnnouncementClient`) permite aos usuários enviar e receber anúncios em um grupo multicast.
+- O servidor de anúncios escolares (`AnnouncementServer`) recebe e distribui os anúncios para os clientes conectados.
 
-### Avisos
+### Chat em Grupo
 
-``
-(dd/MM/yyyy) [HH:mm] Assunto: mensagem. 
-``
+- O cliente de chat em grupo (`ChatClient`) permite aos usuários se conectar ao servidor de chat e trocar mensagens em um grupo multicast.
+- O servidor de chat em grupo (`ChatServer`) aceita conexões de clientes e encaminha as mensagens recebidas para todos os outros clientes conectados.
 
-### Chat:
-``
-(dd/MM/yyyy) [HH:mm] Nome: mensagem. 
-``
+## Como Executar
 
-Assim, tornando-se fácil a identificação das informações e de quem as está enviando.
+- Para executar o cliente, você pode usar a classe `ClientSelect`, que permite escolher entre os modos de anúncio escolar e chat em grupo.
+- Certifique-se de fornecer as informações necessárias, como o nome do autor ou identificação do usuário, quando solicitado.
+- Você pode encerrar a execução do cliente digitando "exit" na entrada.
+- Certifique-se de que o servidor correspondente esteja em execução antes de iniciar o cliente.
+
+## Dependências
+
+Este projeto utiliza as seguintes classes Java incorporadas:
+
+- `MulticastSocket` e `InetAddress` para comunicação multicast.
+- `Socket` para comunicação TCP.
+- `ObjectInputStream` e `ObjectOutputStream` para serialização de objetos.
+- `Thread` para gerenciar threads concorrentes.
+- `Scanner` para entrada de usuário.
